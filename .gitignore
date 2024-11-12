@@ -35,4 +35,6 @@ build/
 ### Firbase ###
 src/main/resources/identity-daily-planner-firebase-adminsdk-9prjq-c9115a4b31.json
 
+## DS Store
 
+.DS_Store
