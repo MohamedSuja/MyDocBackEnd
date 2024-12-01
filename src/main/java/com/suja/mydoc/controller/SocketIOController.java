@@ -5,7 +5,11 @@ import com.corundumstudio.socketio.SocketIOClient;
 import com.corundumstudio.socketio.SocketIOServer;
 import com.corundumstudio.socketio.listener.DataListener;
 import com.suja.mydoc.dto.MessageSocketDto;
+import com.suja.mydoc.dto.PushNotificationRequestDto;
+import com.suja.mydoc.service.PushNotificationService;
+import com.suja.mydoc.service.SocketIOService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -16,6 +20,9 @@ import java.util.Map;
 @Slf4j
 public class SocketIOController {
     protected final SocketIOServer socketServer;
+
+    @Autowired
+    private SocketIOService shocketIOService;
 
     public SocketIOController(SocketIOServer socketServer) {
         this.socketServer = socketServer;
@@ -43,6 +50,18 @@ public class SocketIOController {
             ackRequest.sendAckData(
                     "Message send to target user successfully"
             );
+
+
+            PushNotificationRequestDto  pushNotification = PushNotificationRequestDto.builder()
+                    .title("New Message")
+                    .message(messageSocketDto.getMessage())
+                    .topic("all")
+                    .build();
+
+
+
+            shocketIOService.sendNotificationToMessage(Integer.parseInt(messageSocketDto.getTargetUserId()),pushNotification);
+
         }
     };
 }

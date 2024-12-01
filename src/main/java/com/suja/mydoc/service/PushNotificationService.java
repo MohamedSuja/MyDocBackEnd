@@ -52,9 +52,10 @@ public class PushNotificationService {
                             .build();
                     try {
                         String response = FirebaseMessaging.getInstance().send(message);
-                        log.info("Sent message to token {}: {}", token, response);
+
+                      log.info("Sent message to token {}: {}", token, response);
                     } catch (Exception e) {
-                        log.error("Error sending message to token {}: {}", token, e.getMessage());
+                     //   log.error("Error sending message to token {}: {}", token, e.getMessage());
                     }
                 }))
                 .toList();
